@@ -1,7 +1,7 @@
 import { parseOrchestratorPlan } from './parseOrchestratorPlan.js';
 
-const API_ENDPOINT = "https://vibe-proxy-gqv4.onrender.com/v1/chat/completions";
-const API_KEY = "sk-vibe-summer-2026";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT || "https://vibe-proxy-gqv4.onrender.com/v1/chat/completions";
+const API_KEY = import.meta.env.VITE_API_KEY || "sk-vibe-summer-2026";
 
 interface ChatResponse {
   choices: Array<{
@@ -117,7 +117,7 @@ Rules:
       action: "error",
       details: errorMessage,
     });
-    throw new Error(`Planning failed: ${errorMessage}`);
+    throw new Error(`Planning failed: ${errorMessage}`, { cause: error });
   }
 }
 
@@ -273,6 +273,6 @@ export async function chatWithOrchestrator(
       action: "error",
       details: errorMessage,
     });
-    throw new Error(`Orchestration failed: ${errorMessage}`);
+    throw new Error(`Orchestration failed: ${errorMessage}`, { cause: error });
   }
 }
